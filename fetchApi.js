@@ -23,10 +23,18 @@ async function fetchApi(params) {
 	if (params.code_postal) {
 		url += ` AND (codePostalEtablissement:${params.code_postal}*)`;
 	}
-	const response = await fetch(url, config);
-	const data = await response.json();
+	try {
+		const response = await fetch(url, config);
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+		const data = await response.json();
 
-	return data.etablissements;
+		return data.etablissements;
+	} catch (error) {
+		console.error('Error fetching data:', error);
+		return [];
+	}
 }
 
 module.exports = fetchApi;

@@ -21,6 +21,7 @@ app.get('/get-data', (req, res) => {
 		const results = await fetchApi(data);
 		res.status(200).json(results);
 	};
+
 	onGetData(req.query.query);
 });
 
